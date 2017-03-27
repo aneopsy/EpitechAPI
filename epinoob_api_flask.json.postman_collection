@@ -1,6 +1,6 @@
 {
 	"id": "ca101120-9577-a7dd-0f69-2497c28312d6",
-	"name": "intra_api_flask",
+	"name": "epinoob_api_flask",
 	"description": "",
 	"order": [
 		"b352b552-a411-13ff-7a5e-753120af0bfc",

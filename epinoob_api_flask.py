@@ -15,7 +15,7 @@ logging.basicConfig(filename=".api.log", level=logging.INFO)
 
 @app.route('/', methods=['POST', 'GET'])
 def doc():
-    return render_template("api_epitech.html")
+    return render_template("epinoob_api_doc.html")
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -174,7 +174,7 @@ def get_file():
                 return json.dumps({"error": {"message": "Connection token is invalid or has expired", 'code':403}}), 403
         return clean_json(r.text)
     except Exception as e:
-        return json.dumps({"error":{"message":str(e), "code":500}}), 500    
+        return json.dumps({"error":{"message":str(e), "code":500}}), 500
 
 @app.route('/allmodules', methods=['GET'])
 def allmodules():
@@ -187,8 +187,8 @@ def allmodules():
             return json.dumps({"error": {"message": "Connection token is invalid or has expired", 'code':403}}), 403
         return clean_json(r.text)
     except Exception as e:
-        return json.dumps({"error": {"message": "Server was unable to connect through Epitech API", "code": 500}}), 500    
-    
+        return json.dumps({"error": {"message": "Server was unable to connect through Epitech API", "code": 500}}), 500
+
 @app.route('/modules', methods=['POST', 'GET'])
 def modules():
     """/modules (POST,GET) login, password"""
@@ -304,7 +304,7 @@ def user():
         return clean_json(r.text)
     except Exception as e:
         return json.dumps({"error": {"message": "Server was unable to connect to Epitech's intra API", "code": 500}}), 500
-    
+
 @app.route('/event', methods=['GET', 'POST', 'DELETE'])
 def event():
     method = request.method
@@ -324,7 +324,7 @@ def event():
         return clean_json(r.text)
     except Exception as e:
         return json.dumps({"error": {"message": "Server was unable to connect to Epitech's intra API", "code": 500}}), 500
-    
+
 @app.route('/trombi', methods=['GET'])
 def trombi():
     h = parser.HTMLParser()

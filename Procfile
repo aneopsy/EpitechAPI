@@ -1,1 +1,1 @@
-web: python epitech_api_flask.py
+web: python epinoob_api_flask.py
