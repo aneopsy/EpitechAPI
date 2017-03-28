@@ -353,6 +353,10 @@ def favicon():
 def wake_up():
     return ("OK")
 
+@app.route('/ping', methods=['POST', 'GET'])
+def wake_up():
+    return ("pong")
+
 @app.after_request
 def after_request(response):
     response.headers.add("Access-Control-Allow-Credentials", "true")
