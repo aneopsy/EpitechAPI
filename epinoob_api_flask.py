@@ -18,8 +18,6 @@ def track_event(category, action, label=None, value=0):
     data = {
         'v': '1',  # API Version.
         'tid': 'UA-96333689-1',  # Tracking ID / Property ID.
-        # Anonymous Client Identifier. Ideally, this should be a UUID that
-        # is associated with particular user, device, or browser instance.
         'cid': '555',
         't': 'event',  # Event hit type.
         'ec': category,  # Event category.
@@ -40,14 +38,12 @@ def track_event(category, action, label=None, value=0):
 
 @app.route('/', methods=['POST', 'GET'])
 def doc():
-    track_event(
-        category='EpiNoob-API',
-        action='Home')
-
+    track_event(category='Doc', action=request.method)
     return render_template("epinoob_api_doc.html")
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    track_event(category='Login', action=request.method)
     error, session, params = log_and_check_params(["login", "password"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -56,6 +52,7 @@ def login():
 @app.route('/infos', methods=['POST', 'GET'])
 def infos():
     """/login   (POST,GET) login, password"""
+    track_event(category='Infos', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -70,6 +67,7 @@ def infos():
 @app.route('/planning', methods=['POST', 'GET'])
 def planning():
     """/planning    (POST,GET) login, password, start, end, [get] (all, registered, free)"""
+    track_event(category='Planning', action=request.method)
     error, session, params = log_and_check_params(["start", "end", "token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -95,6 +93,7 @@ def planning():
 
 @app.route('/susies', methods=['POST', 'GET'])
 def susies():
+    track_event(category='Susies', action=request.method)
     error, session, params = log_and_check_params( ["start", "end", "token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -119,6 +118,7 @@ def susies():
 
 @app.route('/susie', methods=['POST', 'GET', 'DELETE'])
 def susie(action=""):
+    track_event(category='Susies', action=request.method)
     method = request.method
     error, session, params = log_and_check_params(["id", "token", "calendar_id"], request)
     if error != {}:
@@ -143,6 +143,7 @@ def susie(action=""):
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
     """/projects  (POST,GET) login, password, [get]"""
+    track_event(category='Projects', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -168,6 +169,7 @@ def projects():
 
 @app.route('/project', methods=['GET', 'POST', 'DELETE'])
 def project():
+    track_event(category='Project', action=request.method)
     method = request.method
     error, session, params = log_and_check_params(["token", "scolaryear", "codemodule", "codeinstance", "codeacti"], request)
     if error != {}:
@@ -190,6 +192,7 @@ def project():
 0
 @app.route('/project/files' ,methods=['GET'])
 def get_file():
+    track_event(category='Project/Files', action=request.method)
     method = request.method
     error, session, params = log_and_check_params(["token", "scolaryear", "codemodule", "codeinstance", "codeacti"], request)
     if error != {}:
@@ -207,6 +210,7 @@ def get_file():
 
 @app.route('/allmodules', methods=['GET'])
 def allmodules():
+    track_event(category='AllModules', action=request.method)
     error, session, params = log_and_check_params(["token", "scolaryear", "location", "course"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -221,6 +225,7 @@ def allmodules():
 @app.route('/modules', methods=['POST', 'GET'])
 def modules():
     """/modules (POST,GET) login, password"""
+    track_event(category='Modules', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -234,6 +239,7 @@ def modules():
 
 @app.route('/module', methods=['GET', 'POST', 'DELETE'])
 def module():
+    track_event(category='Module', action=request.method)
     method = request.method
     error, session, params = log_and_check_params(["token", "scolaryear", "codemodule", "codeinstance"], request)
     if error != {}:
@@ -257,6 +263,7 @@ def module():
 @app.route('/marks', methods=['POST', 'GET'])
 def marks():
     """/marks (POST,GET) login, password"""
+    track_event(category='Marks', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -271,6 +278,7 @@ def marks():
 @app.route('/messages', methods=['POST', 'GET'])
 def messages():
     """/messages (POST,GET) login, password"""
+    track_event(category='Messages', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -285,6 +293,7 @@ def messages():
 @app.route('/alerts', methods=['POST', 'GET'])
 def alerts():
     """/alerts (POST,GET) login, password"""
+    track_event(category='Alerts', action=request.method)
     error, session, params = log_and_check_params(["token"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -299,6 +308,7 @@ def alerts():
 @app.route('/photo', methods=['POST', 'GET'])
 def photo():
     """/photo (POST,GET) login, password"""
+    track_event(category='Photo', action=request.method)
     error, session, params = log_and_check_params(["token", "login"], request)
     if error != {}:
         return json.dumps(error)
@@ -308,6 +318,7 @@ def photo():
 @app.route('/token', methods=['POST', 'GET'])
 def token():
     """/token (POST,GET) login, password, scolaryear, codemodule, codeinstance, codeacti, token"""
+    track_event(category='Token', action=request.method)
     error, session, params = log_and_check_params(["tokenvalidationcode", "scolaryear", "codemodule", "codeinstance", "codeacti", "token", "codeevent"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -323,6 +334,7 @@ def token():
 
 @app.route('/user', methods=['GET'])
 def user():
+    track_event(category='User', action=request.method)
     error, session, params = log_and_check_params(["token", "user"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
@@ -336,6 +348,7 @@ def user():
 
 @app.route('/event', methods=['GET', 'POST', 'DELETE'])
 def event():
+    track_event(category='Event', action=request.method)
     method = request.method
     error, session, params = log_and_check_params(["token", "scolaryear", "codemodule", "codeinstance", "codeacti", "codeevent"], request)
     if error != {}:
@@ -356,6 +369,7 @@ def event():
 
 @app.route('/trombi', methods=['GET'])
 def trombi():
+    track_event(category='Trombi', action=request.method)
     h = parser.HTMLParser()
     filters = ""
     method = request.method
@@ -375,11 +389,13 @@ def trombi():
 
 @app.route('/favicon.ico', methods=['POST', 'GET'])
 def favicon():
+    track_event(category='Favicon', action=request.method)
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/wakeup', methods=['POST', 'GET'])
 def wake_up():
+    track_event(category='WakeUp', action=request.method)
     return ("OK")
 
 @app.after_request
