@@ -13,7 +13,6 @@ import logging
 app = Flask(__name__)
 logging.basicConfig(filename=".api.log", level=logging.INFO)
 
-
 def track_event(category, action, label=None, value=0):
     data = {
         'v': '1',  # API Version.
@@ -25,16 +24,9 @@ def track_event(category, action, label=None, value=0):
         'el': label,  # Event label.
         'ev': value,  # Event value, must be an integer
     }
-
     response = requests.post(
         'http://www.google-analytics.com/collect', data=data)
-
-    # If the request fails, this will raise a RequestException. Depending
-    # on your application's needs, this may be a non-error and can be caught
-    # by the caller.
     response.raise_for_status()
-
-
 
 @app.route('/', methods=['POST', 'GET'])
 def doc():
@@ -47,7 +39,7 @@ def login():
     error, session, params = log_and_check_params(["login", "password"], request)
     if error != {}:
         return json.dumps(error), error['error']['code']
-    return json.dumps({"token":session.cookies['PHPSESSID']})
+    return json.dumps({"token":session.cookies['user']})
 
 @app.route('/infos', methods=['POST', 'GET'])
 def infos():
