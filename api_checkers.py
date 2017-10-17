@@ -35,8 +35,8 @@ def log_and_check_params(mandatory_params, request):
         if "login" and "password" in params.keys():
             if not log_user_with_login(params, session):
                 error = {"error": {"code": 401, "message": "Invalid login/password combinaison"}}
-        elif "token" in params.keys():
-            session.cookies['user'] = params['token']
+#        elif "token" in params.keys():
+#            session.cookies['user'] = params['token']
         else:
             error = {"error": {"code":401, "message":"No token or login/password"}}
     return error, session, params
